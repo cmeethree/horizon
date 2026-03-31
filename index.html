@@ -899,24 +899,9 @@ function copySql() {
 
 // ── BOOT ──
 (async function boot() {
-  const saved = localStorage.getItem(CREDS_KEY);
-  if (saved) {
-    try {
-      const { url, key } = JSON.parse(saved);
-      document.getElementById('sb-url').value = url;
-      document.getElementById('sb-key').value = key;
-      API_URL = url.replace(/\/$/, '');
-      API_KEY = key;
-      await testConnection();
-      await startApp();
-      return;
-    } catch(e) {
-      localStorage.removeItem(CREDS_KEY);
-      API_URL = ''; API_KEY = '';
-    }
-  }
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('setup').style.display = 'flex';
+  API_URL = 'https://sfsbkvvgizxxijmcggfh.supabase.co';
+  API_KEY = 'sb_publishable_1rtsvl5zpgn0RbJK7b8ITg_nztVBypk';
+  await startApp();
 })();
 </script>
 </body>
