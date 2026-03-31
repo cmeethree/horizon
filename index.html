@@ -549,13 +549,30 @@ async function loadRows() {
 }
 
 // ── POLLING (replaces realtime) ──
+let userIsActive = false;
+let activityTimer = null;
+
+function markActive() {
+  userIsActive = true;
+  if (activityTimer) clearTimeout(activityTimer);
+  activityTimer = setTimeout(() => { userIsActive = false; }, 3000);
+}
+
+document.addEventListener('keydown', markActive);
+document.addEventListener('mousedown', markActive);
+document.addEventListener('focus', markActive, true);
+
 function startPolling() {
   pollTimer = setInterval(async () => {
+    // never re-render while user is typing or interacting
+    if (userIsActive) return;
+    // also skip if any input/textarea is currently focused
+    const active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'SELECT')) return;
     try {
       const data = await dbSelect('initiatives');
       const incoming = (data || []).map(r => ({ ...r, jobs: r.jobs || [] }));
       let changed = false;
-      // merge remote changes without clobbering local UI state
       incoming.forEach(remote => {
         const local = rows.find(r => r.id === remote.id);
         if (!local) {
@@ -569,7 +586,6 @@ function startPolling() {
           changed = true;
         }
       });
-      // remove deleted rows
       const incomingIds = new Set(incoming.map(r => r.id));
       const before = rows.length;
       rows = rows.filter(r => incomingIds.has(r.id));
@@ -578,7 +594,7 @@ function startPolling() {
         rows.sort((a,b) => (a.sort_order||0) - (b.sort_order||0));
         render();
       }
-    } catch(e) { /* silent — don't interrupt user on poll failure */ }
+    } catch(e) { /* silent */ }
   }, 5000);
 }
 
