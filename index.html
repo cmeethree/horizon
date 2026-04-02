@@ -16,9 +16,9 @@
   --bg3: #253030;
 
   /* main content area — warm light */
-  --main-bg:   #FAFAFA;
-  --main-bg2:  #F0F0F0;
-  --main-bg3:  #F5F5F5;
+  --main-bg:   #f0ebe4;
+  --main-bg2:  #e8e2db;
+  --main-bg3:  #ede7e0;
 
   --teal: #486160; --tl: #3d7a76; --tl2: #2e5e5b;
   --bdr:  rgba(72,97,96,0.15); --bdr2: rgba(72,97,96,0.3);
@@ -200,7 +200,7 @@ html, body { height: 100%; background: var(--main-bg); color: var(--tx); font-fa
 .cell input::placeholder { color: var(--txd); }
 .cell select { color: var(--tx); }
 .cell select { cursor:pointer; appearance:none; -webkit-appearance:none; }
-.cell select option { background: #FAFAFA; color: #1a2828; }
+.cell select option { background: #f0ebe4; color: #1a2828; }
 .cell input:focus, .cell select:focus, .cell textarea:focus {
   background: rgba(110,158,155,0.08); border-radius:3px;
   box-shadow: 0 0 0 1px var(--tl2); padding: 2px 4px;
@@ -418,8 +418,8 @@ create policy "public access" on initiatives
     <div class="tbl-wrap" id="root"></div>
   </div>
 
-  <div class="statsbar" id="sb">   
-    <!-- <button class="disconnect-btn" onclick="disconnect()">Disconnect</button> -->
+  <div class="statsbar" id="sb">
+    <button class="disconnect-btn" onclick="disconnect()">Disconnect</button>
   </div>
 </div>
 
@@ -916,7 +916,7 @@ function render() {
     <div style="margin-left:auto;display:flex;gap:24px;align-items:center;">
       <div><span class="sv" style="color:#d96060">${crit}</span>critical</div>
       <div><span class="sv" style="color:#c8a050">${high}</span>high</div>
-      <!-- <button class="disconnect-btn" onclick="disconnect()">Disconnect</button> //-->
+      <button class="disconnect-btn" onclick="disconnect()">Disconnect</button>
     </div>`;
 }
 
