@@ -888,30 +888,25 @@ function render() {
 // ── AUTH ──
 
 
-function proceedToSetup() {
+async function proceedToSetup() {
   const saved = localStorage.getItem(CREDS_KEY);
   if (saved) {
     try {
       const { url, key } = JSON.parse(saved);
-      document.getElementById('sb-url').value = url;
-      document.getElementById('sb-key').value = key;
       API_URL = url.replace(/\/$/,'');
       API_KEY = key;
       document.getElementById('loading').style.display = 'flex';
-      testConnection().then(ok => {
-        if (ok) {
-          startApp();
-        } else {
-          localStorage.removeItem(CREDS_KEY);
-          document.getElementById('loading').style.display = 'none';
-          document.getElementById('setup-screen').style.display = 'flex';
-        }
-      });
+      document.getElementById('setup-screen').style.display = 'none';
+      await testConnection();
+      await startApp();
       return;
     } catch(e) {
       localStorage.removeItem(CREDS_KEY);
+      API_URL = ''; API_KEY = '';
+      document.getElementById('loading').style.display = 'none';
     }
   }
+  document.getElementById('loading').style.display = 'none';
   document.getElementById('setup-screen').style.display = 'flex';
 }
 
