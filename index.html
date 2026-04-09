@@ -56,7 +56,7 @@ html, body { height: 100%; background: var(--main-bg); color: var(--tx); font-fa
 
 /* ── SETUP SCREEN ── */
 .setup-overlay {
-  position: fixed; inset: 0; background: var(--main-bg);
+  position: fixed; inset: 0; background: #0d1117;
   display: flex; align-items: center; justify-content: center;
   z-index: 1000; padding: 24px;
 }
@@ -167,14 +167,14 @@ html, body { height: 100%; background: var(--main-bg); color: var(--tx); font-fa
   gap: 0; padding: 10px 0 8px;
   border-bottom: 0.5px solid var(--bdr2);
   font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--txm);
-  background: var(--main-bg); z-index: 1;
+  position: sticky; top: 0; background: var(--main-bg); z-index: 20;
 }
 .ch { padding: 0 6px; }
 
 .hz-hdr {
   display: flex; align-items: center; gap: 10px;
   padding: 20px 0 8px;
-  background: var(--main-bg);
+  position: sticky; top: 36px; background: var(--main-bg); z-index: 15;
 }
 .hz-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .hz-lbl { font-size: 15px; font-weight: 500; font-family: 'DM Serif Display', Georgia, serif; letter-spacing: 0.04em; text-transform: uppercase; font-style: normal; }
@@ -327,6 +327,88 @@ html, body { height: 100%; background: var(--main-bg); color: var(--tx); font-fa
   background:transparent; font-family:inherit; letter-spacing:0.06em; transition:all 0.12s; font-weight:600; text-transform:uppercase;
 }
 .disconnect-btn:hover { border-color:#e26060; color:#e26060; }
+
+/* ── SETUP / AUTH SCREENS ── */
+.overlay {
+  position: fixed; inset: 0; background: #0d1117;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; padding: 24px;
+}
+.setup-card {
+  width: 100%; max-width: 580px;
+  background: #1e2929; border: 0.5px solid rgba(129,211,224,0.25);
+  border-radius: 12px; padding: 32px 36px;
+  max-height: 90vh; overflow-y: auto;
+}
+.card-eyebrow {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #81D3E0; margin-bottom: 10px; font-weight: 500;
+}
+.card-logo {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 32px; color: #f0ebe4; letter-spacing: 0.01em;
+  margin-bottom: 32px; line-height: 1.2;
+}
+.card-field { margin-bottom: 10px; text-align: left; }
+.card-field label {
+  display: block; font-size: 10px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 5px;
+}
+.card-field input {
+  width: 100%; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 13px 16px; font-size: 13px; color: #f0ebe4;
+  font-family: inherit; outline: none; transition: border-color 0.12s;
+}
+.card-field input:focus { border-color: rgba(129,211,224,0.5); background: rgba(255,255,255,0.08); }
+.card-field input::placeholder { color: rgba(255,255,255,0.2); }
+.card-btn {
+  width: 100%; padding: 14px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; background: #81D3E0;
+  color: #0d1117; font-family: inherit; letter-spacing: 0.04em;
+  transition: background 0.12s, opacity 0.12s; margin-top: 6px;
+}
+.card-btn:hover { background: #9de0ea; }
+.card-btn:disabled { opacity: 0.5; cursor: default; }
+.card-error { font-size: 11px; color: #e26060; margin-top: 12px; display: none; text-align: center; }
+
+.setup-steps { display: flex; flex-direction: column; gap: 18px; margin-bottom: 24px; }
+.setup-step { display: flex; gap: 14px; align-items: flex-start; }
+.step-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(129,211,224,0.1); border: 0.5px solid rgba(129,211,224,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #81D3E0; flex-shrink: 0; margin-top: 1px;
+}
+.step-body { flex: 1; }
+.step-label { font-size: 12px; color: #d8e8e7; margin-bottom: 3px; font-weight: 500; }
+.step-desc { font-size: 11px; color: rgba(129,211,224,0.5); line-height: 1.6; }
+.step-desc a { color: #81D3E0; text-decoration: none; }
+.step-desc code { background: rgba(129,211,224,0.08); padding: 1px 5px; border-radius: 3px; font-size: 10px; font-family: monospace; color: #81D3E0; }
+
+.sql-block {
+  margin-top: 8px; position: relative; cursor: pointer;
+  background: rgba(0,0,0,0.25); border: 0.5px solid rgba(129,211,224,0.2);
+  border-radius: 6px; padding: 10px 12px; transition: border-color 0.12s;
+}
+.sql-block:hover { border-color: #81D3E0; }
+.sql-pre { font-family: monospace; font-size: 10px; color: #81D3E0; line-height: 1.75; white-space: pre; overflow-x: auto; margin: 0; }
+.sql-copy-hint { position: absolute; top: 7px; right: 9px; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(129,211,224,0.4); transition: color 0.12s; }
+.sql-block:hover .sql-copy-hint { color: #81D3E0; }
+
+/* loading */
+.loading-screen {
+  position: fixed; inset: 0; background: #0d1117;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999; flex-direction: column; gap: 16px;
+}
+.loading-spinner {
+  width: 26px; height: 26px; border: 1.5px solid rgba(129,211,224,0.2);
+  border-top-color: #81D3E0; border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 11px; color: rgba(129,211,224,0.5); letter-spacing: 0.08em; }
 </style>
 </head>
 <body>
@@ -410,6 +492,43 @@ create policy "public access" on initiatives
 </div>
 
 <!-- MAIN APP -->
+
+<!-- LOADING -->
+<div class="loading-screen" id="loading" style="display:none">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Connecting…</div>
+</div>
+
+    <div class="card-title">Horizon Roadmap — Enter password to continue</div>
+    <div class="card-field">
+      <label>Password</label>
+      <input type="password" id="auth-password" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter') checkPassword()" />
+    </div>
+    <button class="card-btn" onclick="checkPassword()">Continue</button>
+    <div class="card-error" id="auth-error">Incorrect password.</div>
+  </div>
+</div>
+
+<!-- SUPABASE SETUP -->
+<div class="overlay" id="setup-screen" style="display:none">
+  <div class="auth-card">
+    <div class="card-eyebrow">KEEP HEALTH</div>
+    <div class="card-logo">Horizon Roadmap</div>
+    <div class="card-field">
+      <label>Project URL</label>
+      <input type="text" id="sb-url" placeholder="https://xxxxxxxxxxxx.supabase.co" />
+    </div>
+    <div class="card-field">
+      <label>Anon / Public Key</label>
+      <input type="password" id="sb-key" placeholder="Enter key"
+        onkeydown="if(event.key==='Enter') connectSupabase()" />
+    </div>
+    <button class="card-btn" id="connect-btn" onclick="connectSupabase()">Access Roadmap</button>
+    <div class="card-error" id="setup-error"></div>
+  </div>
+</div>
+
 <div class="shell" id="app" style="display:none">
   <div class="topbar">
     <div class="topbar-left">
@@ -550,11 +669,7 @@ function showErr(msg) {
   el.style.display = 'block';
 }
 
-function disconnect() {
-  if (!confirm('Disconnect and clear saved credentials?')) return;
-  localStorage.removeItem(CREDS_KEY);
-  location.reload();
-}
+
 
 // ── APP INIT ──
 async function startApp() {
@@ -934,22 +1049,85 @@ function render() {
     </div>`;
 }
 
-// ── COPY SQL ──
+
+// ── AUTH ──
+
+
+function proceedToSetup() {
+  const saved = localStorage.getItem(CREDS_KEY);
+  if (saved) {
+    try {
+      const { url, key } = JSON.parse(saved);
+      document.getElementById('sb-url').value = url;
+      document.getElementById('sb-key').value = key;
+      API_URL = url.replace(/\/$/,'');
+      API_KEY = key;
+      document.getElementById('loading').style.display = 'flex';
+      testConnection().then(ok => {
+        if (ok) {
+          startApp();
+        } else {
+          localStorage.removeItem(CREDS_KEY);
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('setup-screen').style.display = 'flex';
+        }
+      });
+      return;
+    } catch(e) {
+      localStorage.removeItem(CREDS_KEY);
+    }
+  }
+  document.getElementById('setup-screen').style.display = 'flex';
+}
+
+async function connectSupabase() {
+  const url = document.getElementById('sb-url').value.trim().replace(/\/$/, '');
+  const key = document.getElementById('sb-key').value.trim();
+  const btn = document.getElementById('connect-btn');
+  const err = document.getElementById('setup-error');
+
+  if (!url || !key) { showSetupErr('Please fill in both fields.'); return; }
+  if (!url.startsWith('https://')) { showSetupErr('URL should start with https://'); return; }
+
+  btn.disabled = true; btn.textContent = 'Connecting…';
+  err.style.display = 'none';
+  API_URL = url; API_KEY = key;
+
+  try {
+    await testConnection();
+    localStorage.setItem(CREDS_KEY, JSON.stringify({ url, key }));
+    document.getElementById('setup-screen').style.display = 'none';
+    await startApp();
+  } catch(e) {
+    API_URL = ''; API_KEY = '';
+    btn.disabled = false; btn.textContent = 'Connect to Supabase';
+    showSetupErr('Could not connect: ' + (e.message || 'Check your URL and key, and make sure the table was created.'));
+  }
+}
+
+function showSetupErr(msg) {
+  const el = document.getElementById('setup-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+
 function copySql() {
   const sql = document.querySelector('.sql-pre').textContent;
   navigator.clipboard.writeText(sql).then(() => {
     const hint = document.getElementById('sql-hint');
-    hint.textContent = 'Copied!';
-    hint.style.color = 'var(--tl)';
+    hint.textContent = 'Copied!'; hint.style.color = '#81D3E0';
     setTimeout(() => { hint.textContent = 'Click to copy'; hint.style.color = ''; }, 2000);
   });
 }
 
+function disconnect() {
+  if (!confirm('Disconnect and clear saved credentials?')) return;
+  localStorage.removeItem(CREDS_KEY);
+  location.reload();
+}
+
 // ── BOOT ──
 (async function boot() {
-  API_URL = 'https://sfsbkvvgizxxijmcggfh.supabase.co';
-  API_KEY = 'sb_publishable_1rtsvl5zpgn0RbJK7b8ITg_nztVBypk';
-  await startApp();
+  proceedToSetup();
 })();
 </script>
 </body>
